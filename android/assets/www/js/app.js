@@ -5,31 +5,60 @@
 // the 2nd parameter is an array of 'requires'
 
 
-function TestController($scope, ngFB) {
+function TestController($scope, ngFB, $location) {
     $scope.tasks = [
         {title: 'FaceBook'},
-        {title: 'Modal'},
+        {title: 'Youtube'},
     ];
+}
+function FaceController($scope,ngFB) {
     $scope.fbLogin = function () {
-        ngFB.login({scope: 'email,read_stream,publish_actions'}).then(
+        ngFB.login({scope: 'email,public_profile,user_friends'}).then(
             function (response) {
                 console.log(response);
                 if (response.status === 'connected') {
                     console.log('Facebook login succeeded');
-                    $scope.closeLogin();
+                    $location.path("/");
                 } else {
                     alert('Facebook login failed');
                 }
             });
     };
 }
+function YoutubeController($scope,$http) {
+    $scope.youtubeParams = {
+        key: 'AIzaSyCfR2XE9HP1PHKUn5YgkrwP7wpxmvG6keg',
+        type: 'video',
+        maxResults: '5',
+        part: 'id,snippet',
+        q: 'usavich',
+        order: 'date',
+        channelId: 'UCjwceawojfsRoc5I9iSgivw'
+    }
+    $scope.searchYoutube = function () {
+        console.log("work in here!");
+        $http.get('https://www.googleapis.com/youtube/v3/search', {params:$scope.youtubeParams}).success(function(response){
+            console.log('Kqnew'+response);
+            angular.forEach(response, function(key, value){
+                console.log('CJJJA'+key);
+                console.log('TTTTt'+value);
+            });
+        });
+    };
+}
 function route($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/')
 
     $stateProvider
-        .state('info', {
+        .state('facebook', {
             url: '/FaceBook',
-            templateUrl: 'facebook.html'
+            templateUrl: 'facebook.html',
+            controller: 'FaceCtrl'
+        })
+        .state('youtube', {
+            url: '/Youtube',
+            templateUrl: 'youtube.html',
+            controller: 'YoutubeCtrl'
         })
         .state('home', {
             url: '/',
@@ -38,8 +67,12 @@ function route($stateProvider, $urlRouterProvider) {
         })
 
 }
+//Googlekey  AIzaSyCfR2XE9HP1PHKUn5YgkrwP7wpxmvG6keg
+//UCjwceawojfsRoc5I9iSgivw
 angular.module('starter', ['ionic','ngOpenFB'])
     .controller('TodoCtrl', TestController)
+    .controller('FaceCtrl', FaceController)
+    .controller('YoutubeCtrl', YoutubeController)
     .run(function ($ionicPlatform, ngFB) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
