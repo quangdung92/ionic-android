@@ -46,6 +46,13 @@ module.exports = [
         "clobbers": [
             "window.open"
         ]
+    },
+    {
+        "file": "plugins/com.phonegap.plugins.speech/www/XSpeechRecognizer.js",
+        "id": "com.phonegap.plugins.speech.XSpeechRecognizer",
+        "clobbers": [
+            "plugins.speechrecognizer"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -56,7 +63,8 @@ module.exports.metadata =
     "cordova-plugin-device": "1.0.1",
     "cordova-plugin-splashscreen": "2.1.0",
     "cordova-plugin-whitelist": "1.0.0",
-    "org.apache.cordova.inappbrowser": "0.6.0"
+    "org.apache.cordova.inappbrowser": "0.6.0",
+    "com.phonegap.plugins.speech": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

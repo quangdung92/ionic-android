@@ -8,7 +8,8 @@
 function TestController($scope, ngFB, $location) {
     $scope.tasks = [
         {title: 'FaceBook'},
-        {title: 'Youtube'},
+        {title: 'StoT'},
+        {title: 'API'}
     ];
 }
 function FaceController($scope,ngFB) {
@@ -25,6 +26,15 @@ function FaceController($scope,ngFB) {
             });
     };
 }
+function APIController($scope,$http){
+    var sel = "Users";
+    $scope.apiget = function() {
+        $http.get('https://limitless-stream-3387.herokuapp.com/api/v1/hanlder',{params: {sel:sel,page:1}}).success(function(response){
+            $scope.getval = response.data;
+        });
+    };
+}
+
 function YoutubeController($scope,$http) {
     $scope.youtubeParams = {
         key: 'AIzaSyCfR2XE9HP1PHKUn5YgkrwP7wpxmvG6keg',
@@ -55,10 +65,15 @@ function route($stateProvider, $urlRouterProvider) {
             templateUrl: 'facebook.html',
             controller: 'FaceCtrl'
         })
-        .state('youtube', {
-            url: '/Youtube',
+        .state('StoT', {
+            url: '/StoT',
             templateUrl: 'youtube.html',
             controller: 'YoutubeCtrl'
+        })
+        .state('api', {
+            url: '/API',
+            templateUrl: 'api.html',
+            controller: 'APICtrl'
         })
         .state('home', {
             url: '/',
@@ -72,6 +87,7 @@ function route($stateProvider, $urlRouterProvider) {
 angular.module('starter', ['ionic','ngOpenFB'])
     .controller('TodoCtrl', TestController)
     .controller('FaceCtrl', FaceController)
+    .controller('APICtrl', APIController)
     .controller('YoutubeCtrl', YoutubeController)
     .run(function ($ionicPlatform, ngFB) {
         $ionicPlatform.ready(function () {

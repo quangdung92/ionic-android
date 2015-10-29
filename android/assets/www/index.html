@@ -25,20 +25,20 @@
   </head>
     <body ng-app="starter" ng-controller="TodoCtrl">
     <ion-nav-view>
-      <ion-header-bar class="bar-dark">
-        <h1 class="title">Todo</h1>
-      </ion-header-bar>
+      <div class="bar bar-header bar-calm">
+        <h1 class="title">Intelligent kid</h1>
+      </div>
     </ion-nav-view>
 
     <script type="text/ng-template" id="home.html">
       <ion-view title="Home">
         <ion-content padding="true">
           <h2>Home Page</h2>
-          <ion-list>
-            <ion-item ng-repeat="task in tasks">
-              <a class="button icon icon-right ion-chevron-right" href="#/{{task.title}}" >{{task.title}}</a>
-            </ion-item>
-          </ion-list>
+          <div class="list" ng-repeat="task in tasks">
+              <a class="item item-icon-left" href="#/{{task.title}}">
+                <i class="icon ion-ionic"> </i>
+                {{task.title}}</a>
+          </div>
         </ion-content>
       </ion-view>
     </script>
@@ -71,5 +71,22 @@
         </ion-content>
       </ion-view>
     </script>
+
+    <script type="text/ng-template" id="api.html">
+      <ion-view title="Info">
+        <ion-content padding="true">
+          <h2>APICheck</h2>
+          <label class="item">
+            <button class="button button-block button-positive" ng-click="apiget()">
+              Get value
+            </button>
+          </label>
+          <ion-nav-view name='display'>
+            <p ng-bind="getval"></p>
+          </ion-nav-view>
+        </ion-content>
+      </ion-view>
+    </script>
+
     </body>
 </html>
