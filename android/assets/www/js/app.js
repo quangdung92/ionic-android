@@ -12,9 +12,6 @@ function TestController($scope, ngFB, $location) {
         {title: 'API'}
     ];
 }
-function recognizeSpeech() {
-
-}
 function FaceController($scope,ngFB) {
     $scope.fbLogin = function () {
         ngFB.login({scope: 'email,public_profile,user_friends'}).then(
@@ -40,8 +37,15 @@ function APIController($scope,$http){
 
 function YoutubeController($scope) {
     function resultCallback (result){
-        console.log(result.results[0][0].transcript);
-        alert(result.results[0][0].transcript);
+        //console.log(result.results[0][0].transcript);
+        //alert(result.results[0][0].transcript);
+        TTS.speak({
+            text: result.results[0][0].transcript,
+            locale: 'en-GB',
+            rate: 1.25
+        }, function () {
+            alert('success');
+        });
     }
     function errorCallback(error){
         angular.forEach(error, function(value, key) {
@@ -58,15 +62,15 @@ function YoutubeController($scope) {
         window.plugins.speechrecognizer.stop(resultCallback, errorCallback);
     }
     $scope.testSpeech = function() {
+        var a = "siller!!"
+        Silver(a);
         TTS.speak({
             text: 'Hi! professer, have a nice day!',
             locale: 'en-GB',
             rate: 1.25
         }, function () {
-                alert('success');
-            }, function (reason) {
-                alert(reason);
-            });
+            alert('success');
+        });
     }
 }
 function route($stateProvider, $urlRouterProvider) {
@@ -97,7 +101,7 @@ function route($stateProvider, $urlRouterProvider) {
 }
 //Googlekey  AIzaSyCfR2XE9HP1PHKUn5YgkrwP7wpxmvG6keg
 //UCjwceawojfsRoc5I9iSgivw
-angular.module('starter', ['ionic','ngOpenFB'])
+angular.module('starter', ['ionic','ngOpenFB','brain'])
     .controller('TodoCtrl', TestController)
     .controller('FaceCtrl', FaceController)
     .controller('APICtrl', APIController)
