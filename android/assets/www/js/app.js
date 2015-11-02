@@ -57,6 +57,17 @@ function YoutubeController($scope) {
     $scope.stopRecognition = function() {
         window.plugins.speechrecognizer.stop(resultCallback, errorCallback);
     }
+    $scope.testSpeech = function() {
+        TTS.speak({
+            text: 'Hi! professer, have a nice day!',
+            locale: 'en-GB',
+            rate: 1.25
+        }, function () {
+                alert('success');
+            }, function (reason) {
+                alert(reason);
+            });
+    }
 }
 function route($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/')
