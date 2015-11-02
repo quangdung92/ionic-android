@@ -63,9 +63,16 @@
       <ion-view title="Info">
         <ion-content padding="true">
           <h2>Youtube</h2>
+
           <label class="item">
-            <button class="button button-block button-positive" ng-click="searchYoutube()">
-              Login with Facebook
+            <button class="button button-block button-positive" ng-click="recognizeSpeech()">
+              record
+            </button>
+            <button class="button button-block button-positive" ng-click="stopRecognition()">
+              stop
+            </button>
+            <button class="button button-block button-positive" ng-click="getSupportedLanguages()">
+              lang
             </button>
           </label>
         </ion-content>

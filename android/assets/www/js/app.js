@@ -12,6 +12,9 @@ function TestController($scope, ngFB, $location) {
         {title: 'API'}
     ];
 }
+function recognizeSpeech() {
+
+}
 function FaceController($scope,ngFB) {
     $scope.fbLogin = function () {
         ngFB.login({scope: 'email,public_profile,user_friends'}).then(
@@ -35,26 +38,25 @@ function APIController($scope,$http){
     };
 }
 
-function YoutubeController($scope,$http) {
-    $scope.youtubeParams = {
-        key: 'AIzaSyCfR2XE9HP1PHKUn5YgkrwP7wpxmvG6keg',
-        type: 'video',
-        maxResults: '5',
-        part: 'id,snippet',
-        q: 'usavich',
-        order: 'date',
-        channelId: 'UCjwceawojfsRoc5I9iSgivw'
+function YoutubeController($scope) {
+    function resultCallback (result){
+        console.log(result.results[0][0].transcript);
+        alert(result.results[0][0].transcript);
     }
-    $scope.searchYoutube = function () {
-        console.log("work in here!");
-        $http.get('https://www.googleapis.com/youtube/v3/search', {params:$scope.youtubeParams}).success(function(response){
-            console.log('Kqnew'+response);
-            angular.forEach(response, function(key, value){
-                console.log('CJJJA'+key);
-                console.log('TTTTt'+value);
-            });
+    function errorCallback(error){
+        angular.forEach(error, function(value, key) {
+            console.log("Key"+ key);
+            console.log("Value"+ value);
         });
+    }
+    $scope.recognizeSpeech = function() {
+        var maxMatches = 5;
+        var language = "en-US";
+        window.plugins.speechrecognizer.start(resultCallback, errorCallback, maxMatches, language);
     };
+    $scope.stopRecognition = function() {
+        window.plugins.speechrecognizer.stop(resultCallback, errorCallback);
+    }
 }
 function route($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/')
