@@ -39,13 +39,14 @@ function YoutubeController($scope) {
     function resultCallback (result){
         //console.log(result.results[0][0].transcript);
         //alert(result.results[0][0].transcript);
-        TTS.speak({
-            text: result.results[0][0].transcript,
-            locale: 'en-GB',
-            rate: 1.25
-        }, function () {
-            alert('success');
-        });
+        var text = result.results[0][0].transcript;
+        Silver(text);
+        //TTS.speak({
+        //    text: result.results[0][0].transcript,
+        //    locale: 'en-GB',
+        //    rate: 1.25
+        //});
+        recognizeSpeech();
     }
     function errorCallback(error){
         angular.forEach(error, function(value, key) {
